@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version (or Chrome Frame if pre-IE11). -->
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Hello World!</title>
+  <script src="Cesium/Cesium.js"></script>
+  <style>
+      @import url(widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+
+    var provider = new Cesium.WebMapTileServiceImageryProvider({
+    url: "//map1.vis.earthdata.nasa.gov/wmts-webmerc/wmts.cgi?TIME=2015-02-06",
+    layer: "MODIS_Terra_CorrectedReflectance_TrueColor",
+    style: "",
+    format: "image/jpeg",
+    tileMatrixSetID: "GoogleMapsCompatible_Level9",
+    maximumLevel: 9,
+    tileWidth: 256,
+    tileHeight: 256,
+    tilingScheme: new Cesium.WebMercatorTilingScheme()
+    });
+
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+    animation: false, // Only showing one day in this demo
+    baseLayerPicker: false, // Only showing one layer in this demo
+    timeline: false, // Only showing one day in this demo
+    imageryProvider: provider // The layer being shown
+    });
+
+    var profileWall1 = viewer.entities.add({
+        name : 'Profile data image as a cesium wall',
+        wall : {
+            positions : Cesium.Cartesian3.fromDegreesArrayHeights([-101.10, 48.28, 2000000.0,
+                                                                   -103.30, 42.26, 2000000.0,
+                                                                   -105.18, 36.21, 2000000.0,
+                                                                   -106.86, 30.14, 2000000.0,
+                                                                   -108.39, 24.05, 2000000.0,
+                                                                   -109.82, 17.95, 2000000.0,
+                                                                   -111.18, 11.84, 2000000.0,
+                                                                   -112.51, 5.73,  2000000.0,
+                                                                   -113.80, -0.34, 2000000.0]),
+        }
+    });
+
+    var wall1 = profileWall1.wall;
+    wall1.material = 'images/nasa1.png';
+
+    var profileWall2 = viewer.entities.add({
+        name : 'Profile data image as a cesium wall',
+        wall : {
+            positions : Cesium.Cartesian3.fromDegreesArrayHeights([27.39, 78.62, 2000000.0,
+                                                               -4.85, 81.62, 2000000.0,
+                                                               -45.67, 80.76, 2000000.0,
+                                                               -70.51, 76.78, 2000000.0,
+                                                               -83.07, 71.61, 2000000.0,
+                                                               -90.29, 65.99, 2000000.0,
+                                                               -95.01, 60.17, 2000000.0,
+                                                               -98.43, 54.26,  2000000.0,
+                                                               -101.08,48.32, 2000000.0]),
+        }
+    });
+
+    var wall2 = profileWall2.wall;
+    wall2.material = 'images/nasa2.png';
+
+    viewer.zoomTo(viewer.entities);
+  </script>
+</body>
+</html>
